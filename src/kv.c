@@ -34,12 +34,13 @@ char *kv_get(kv_t *db, char *key) {
         kv_entry_t *entry = &db->entries[real_idx];
 
         // is no key, therefore return nothing
-        if (entry->key == NULL || entry->key == (void *)TOMBSTONE) {
+        if (entry->key == NULL || entry->key == (void*)TOMBSTONE) {
             return NULL;
         }
 
         // find an entry and the keys match
-        if (entry->key && !strcmp(entry->key, key)) {
+        if (entry->key &&
+                !strcmp(entry->key, key)) {
             return entry->value;
         }
     }
