@@ -29,7 +29,7 @@ char *kv_get(kv_t *db, char *key) {
     size_t idx = hash(key, db->capacity);
 
     for (int i = 0; i < db->capacity - 1; i++) {
-        size_t real_idx = (idx + i) % db->capacity;
+        size_t real_idx = (idx + 1) % db->capacity;
 
         kv_entry_t *entry = &db->entries[real_idx];
 
@@ -38,7 +38,7 @@ char *kv_get(kv_t *db, char *key) {
             return NULL;
         }
 
-        if (entry->key == (void*)TOMBSTONE) continue;
+        if (entry->key == (void*)TOMBSTONE) return NULL;
 
         // find an entry and the keys match
         if (entry->key &&
