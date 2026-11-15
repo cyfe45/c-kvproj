@@ -43,7 +43,7 @@ int kv_put(kv_t *db, char *key, char *value) {
             if (!newval) return -1;
             entry->value = newval;
 
-            return real_idx;
+            return 0; //real_idx;
         }
 
         // land in a slot that is empty
@@ -60,7 +60,7 @@ int kv_put(kv_t *db, char *key, char *value) {
             entry->key = newkey;
             db->count++;
 
-            return real_idx;
+            return 0; //real_idx;
         }
         
     }
