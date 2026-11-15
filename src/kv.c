@@ -29,14 +29,16 @@ char *kv_get(kv_t *db, char *key) {
     size_t idx = hash(key, db->capacity);
 
     for (int i = 0; i < db->capacity - 1; i++) {
-        size_t real_idx = (idx + 1) % db->capacity;
+        size_t real_idx = (idx + i) % db->capacity;
 
         kv_entry_t *entry = &db->entries[real_idx];
 
         // is no key, therefore return nothing
-        if (entry->key == NULL || entry->key == (void*)TOMBSTONE) {
+        if (entry->key == NULL) {
             return NULL;
         }
+
+        if (entry->key == (void*)TOMBSTONE) continue;
 
         // find an entry and the keys match
         if (entry->key &&
