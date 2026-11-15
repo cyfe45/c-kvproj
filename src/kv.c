@@ -24,12 +24,12 @@ size_t hash(char *val, int capacity) {
 // returns: the pointer to the key
 // NULL if not found
 char *kv_get(kv_t *db, char *key) {
-    if (!db || !key) return NULL;
+    if (!db || !key || db->capacity == 0) return NULL;
 
     size_t idx = hash(key, db->capacity);
 
-    for (int i = 0; i < db->capacity - 1; i++) {
-        size_t real_idx = (idx + 1) % db->capacity;
+    for (size_t i = 0; i < db->capacity; i++) {
+        size_t real_idx = (idx + i) % db->capacity;
 
         kv_entry_t *entry = &db->entries[real_idx];
 
@@ -38,13 +38,10 @@ char *kv_get(kv_t *db, char *key) {
             return NULL;
         }
 
-        if (entry->key == (void*)TOMBSTONE) return NULL;
+        if (entry->key == (void*)TOMBSTONE) continue;
 
         // find an entry and the keys match
-        if (entry->key &&
-                !strcmp(entry->key, key)) {
-            return entry->value;
-        }
+        if (!strcmp(entry->key, key)) return entry->value;
     }
 
     return NULL;
