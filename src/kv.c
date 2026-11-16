@@ -89,7 +89,7 @@ char *kv_get(kv_t *db, char *key) {
 int kv_free(kv_t *db){
     if (!db) return -1;
 
-    for (size_t i = 0; i < db->capacity; i++) {
+    for (int i = 0; i < db->capacity - 1; i++) {
         kv_entry_t *e = &db->entries[i];
 
         if (e->key && e->key != (void *)TOMBSTONE) {
