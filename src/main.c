@@ -7,7 +7,7 @@ int main() {
     printf("%ld\n", table->capacity);
 
     kv_put(table, "hehe", "haha");
-    //kv_put(table, "hehe", "hoho");
+    kv_put(table, "hehe", "hoho");
     //kv_put(table, "lala", "baba");
     kv_put(table, "egg", "protein");
     
@@ -26,5 +26,9 @@ int main() {
 
     printf("%s %s %s\n", val, val2, val3);
 
-    //return 0;
+    kv_delete(table, "hehe");
+    val = NULL;
+    val = kv_get(table, "hehe");
+
+    printf("%s %s %s\n", val, val2, val3);
 }
